@@ -93,3 +93,11 @@ button:hover {
 .signup-btn:hover {
     background-color: #36a420;
 }
+.success-message {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+    text-align: center;
+}
